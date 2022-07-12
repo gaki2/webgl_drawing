@@ -12,10 +12,6 @@ class GLC {
     this.gl = gl;
   }
 
-  resize(width:number, height: number) {
-    this.gl.canvas.width = width;
-    this.gl.canvas.height = height;
-  }
 
   viewport() {
     this.gl.viewport(0,0,this.gl.canvas.width, this.gl.canvas.height);
