@@ -1,3 +1,4 @@
 export const LOCATION = {
-    POSITION: "a_position"
+    POSITION: "a_position",
+    RESOLUTION: "u_resolution",
 }

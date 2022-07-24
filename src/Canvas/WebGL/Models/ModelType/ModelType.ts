@@ -7,11 +7,13 @@ export default class ModelType {
     vertices: number[];
     indices: number[];
 
-    constructor(vertices: number[], indices: number[]) {
+    constructor(vertices: number[], indices?: number[]) {
         this.vertices = vertices;
-        this.indices = indices;
-        this.generateIndexBuffer();
         this.generateVertexBuffer();
+        if (indices) {
+            this.generateIndexBuffer();
+            this.indices = indices;
+        }
     }
 
     private generateVertexBuffer() {
@@ -37,13 +39,16 @@ export default class ModelType {
     }
 
     use(shader: Shader) {
-        if (this.vertexBuffer && this.indexBuffer) {
+        if (this.vertexBuffer) {
             GLC.bindArrayBuffer(this.vertexBuffer);
             shader.enablePosition();
-            GLC.bindElementArrayBuffer(this.indexBuffer);
         } else {
-            console.error("Fail to create vertex Buffer or index Buffer!");
+            console.error("Fail to create vertex buffer");
         }
+        if (this.indices) {
+            GLC.bindElementArrayBuffer(this.indexBuffer!);
+        } 
+        
     }
 
 }

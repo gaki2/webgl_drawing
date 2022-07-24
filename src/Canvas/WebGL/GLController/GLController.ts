@@ -3,7 +3,7 @@
 type Color = [r: number, g: number, b: number, a: number];
 
 type Vertices = number[];
-
+type UniformVectorType = [x?:number, y?:number, z?:number, k?:number];
 class GLC {
   gl: WebGLRenderingContext;
 
@@ -11,7 +11,6 @@ class GLC {
     console.log("webgl init!");
     this.gl = gl;
   }
-
 
   viewport() {
     this.gl.viewport(0,0,this.gl.canvas.width, this.gl.canvas.height);
@@ -21,8 +20,11 @@ class GLC {
     use ? this.gl.enable(this.gl.DEPTH_TEST) : this.gl.disable(this.gl.DEPTH_TEST);
   }
 
-  clear(...[r, g, b, a]: Color) {
+  clearColor(...[r, g, b, a]: Color) {
     this.gl.clearColor(r, g, b, a);
+  }
+
+  clear() {
     this.gl.clear(this.gl.COLOR_BUFFER_BIT);
   }
 
@@ -104,6 +106,24 @@ class GLC {
     return this.gl.createBuffer();
   }
 
+  getUniformLocation(program: WebGLProgram, location: string) {
+    return this.gl.getUniformLocation(program, location);
+  }
+
+  uniformNf(uniformLocation: WebGLUniformLocation, uniformVector: number[]) {
+    switch (uniformVector.length) {
+      case 2:
+        this.gl.uniform2fv(uniformLocation, uniformVector);
+        break;
+      case 3:
+        this.gl.uniform3fv(uniformLocation, uniformVector)
+        break;
+      case 4:
+        this.gl.uniform4fv(uniformLocation, uniformVector);
+        break;
+    }
+  }
+
   // float buffer (vertex)
   bindArrayBuffer(buffer: WebGLBuffer) {
     this.gl.bindBuffer(this.gl.ARRAY_BUFFER, buffer);
@@ -134,11 +154,26 @@ class GLC {
     );
   }
 
-  drawTriangle(numberOfIndices: number) {
+  drawTriangleByElement(numberOfIndices: number) {
     this.gl.drawElements(this.gl.TRIANGLES, numberOfIndices, this.gl.UNSIGNED_SHORT, 0);
   }
 
+  drawTriangleByVertex(totalLen:number) {
+    // totalLen / 2 는 한번의 반복마다, 2개의 vertex 가 vertexShader 에 제공된다는 의미이다.
+    this.gl.drawArrays(this.gl.TRIANGLES, 0, totalLen / 2);
+  }
 
+  drawPoint(totalLen:number) {
+    this.gl.drawArrays(this.gl.POINTS, 0, totalLen / 2);
+  }
+
+  set lineWidth(width: number) {
+    this.gl.lineWidth(width);
+  }
+
+  get lineWidth() {
+    return this.gl.getParameter(this.gl.LINE_WIDTH);
+  }
 
 }
 

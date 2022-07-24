@@ -1,18 +1,21 @@
 import GLC from "../GLController/GLController"
-import VertexShaderSourceText from "./vertexShader";
-import FragmentShaderSourceText from "./fragmentShader";
+import VertexShaderSourceText from "./vertexShaderText";
+import FragmentShaderSourceText from "./fragmentShaderText";
 import { LOCATION } from "./location";
 
 export default class Shader {
     program: WebGLProgram;
     positionAttribute: number;
+    uniformLocations: WebGLUniformLocation [];
+    
 
     init() {
+        
         const vertexShader = GLC.createVertexShader();
         if (vertexShader) {
             GLC.addShaderSource(vertexShader, VertexShaderSourceText);
             GLC.compileShader(vertexShader);
-        } 
+        }
 
         const fragmentShader = GLC.createFragmentShader();
         if (fragmentShader) {
@@ -32,12 +35,18 @@ export default class Shader {
         }
     }
 
+    useUniform(uniformName: string, uniformVector:number[]) {
+        const uniformLocation = GLC.getUniformLocation(this.program, uniformName);
+        
+        return uniformLocation;
+    }
+
     use() {
         GLC.useProgram(this.program);
     }
 
     enablePosition() {
         GLC.enablePosition(this.positionAttribute);
-        GLC.pointToAttribute(this.positionAttribute, 3);
+        GLC.pointToAttribute(this.positionAttribute, 2);
     }
 }
