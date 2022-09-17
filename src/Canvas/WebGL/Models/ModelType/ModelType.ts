@@ -11,8 +11,8 @@ export default class ModelType {
         this.vertices = vertices;
         this.generateVertexBuffer();
         if (indices) {
-            this.generateIndexBuffer();
             this.indices = indices;
+            this.generateIndexBuffer();
         }
     }
 

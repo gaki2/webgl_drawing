@@ -12,7 +12,7 @@ export default class PositionEvent {
         }
         const x = e.clientX;
         const y = e.clientY;
-        Position.addPosition({x,y});
+        Position.addPoint({x,y});
     }
 
     static mouseDown() {
@@ -21,7 +21,6 @@ export default class PositionEvent {
 
     static mouseUp() {
         this.isMouseDown = false;
-        console.log(Position.Position);
     }
     
 
