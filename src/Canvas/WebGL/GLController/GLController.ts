@@ -146,16 +146,16 @@ class GLC {
   unbindElementArrayBuffer() {
     this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, null);
   }
-  addElementArrayBuffer(vertices: Vertices) {
+  addElementArrayBuffer(indices: Vertices) {
     this.gl.bufferData(
       this.gl.ELEMENT_ARRAY_BUFFER,
-      new Uint16Array(vertices),
+      new Uint16Array(indices),
       this.gl.STATIC_DRAW
     );
   }
 
   drawTriangleByElement(numberOfIndices: number) {
-    this.gl.drawElements(this.gl.TRIANGLES, numberOfIndices, this.gl.UNSIGNED_SHORT, 0);
+    this.gl.drawElements(this.gl.TRIANGLE_STRIP, numberOfIndices, this.gl.UNSIGNED_SHORT, 0);
   }
 
   drawTriangleByVertex(totalLen:number) {
@@ -163,18 +163,30 @@ class GLC {
     this.gl.drawArrays(this.gl.TRIANGLES, 0, totalLen / 2);
   }
 
+  drawTriangleStripByVertex(totalLen: number) {
+    this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, totalLen/2);
+  }
+
   drawPoint(totalLen:number) {
     this.gl.drawArrays(this.gl.POINTS, 0, totalLen / 2);
   }
 
-  set lineWidth(width: number) {
+  drawLine(totalLen:number) {
+    this.gl.drawArrays(this.gl.LINES, 0, totalLen / 2);
+  }
+
+  setLineWidth(width: number) {
     this.gl.lineWidth(width);
   }
 
-  get lineWidth() {
+  getLineWidth() {
     return this.gl.getParameter(this.gl.LINE_WIDTH);
   }
 
 }
 
+/**
+ * export default new class() 는 싱글톤 방식임.
+ * 비슷한 방법으로 2가지가 더 있는데, https://stackoverflow.com/questions/48366563/es6-singleton-vs-instantiating-a-class-once 를 참고.
+ */
 export default new GLC();

@@ -16,12 +16,17 @@ export default class Position {
         return this._instance;
     }
 
-    static addPosition(position: PositionType) {
+    static addPoint(position: PositionType) {
         this.positions.push(position.x);
         this.positions.push(position.y);
     }
     
     static get Position() {
         return this.positions;
+    }
+
+    static removeLastPoint() {
+        this.Position.pop(); // pop y
+        this.Position.pop(); // pop x
     }
 }

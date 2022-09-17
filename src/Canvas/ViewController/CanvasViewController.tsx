@@ -19,6 +19,7 @@ function CanvasViewController() {
     const {width, height} = canvas.getBoundingClientRect();
     const displayWidth  = Math.round(width * dpr);
     const displayHeight = Math.round(height * dpr);    
+    console.log(displayWidth, displayHeight);
     canvas.width = displayWidth;
     canvas.height = displayHeight;
     Init(canvas);

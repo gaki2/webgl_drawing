@@ -68,8 +68,18 @@ export default class ModelRenderer {
                     case "POINT" :
                         GLC.drawPoint(model.vertices.length);
                         break ;
+                    case "LINE":
+                        GLC.drawLine(model.vertices.length);
+                        break;
                     case "TRIANGLE":
                         GLC.drawTriangleByVertex(model.vertices.length);
+                        break;
+                    case "TRIANGLE_STRIP":
+                        GLC.drawTriangleStripByVertex(model.vertices.length);
+                        break;
+                    case "TRIANGLE_INDICES":
+                        GLC.drawTriangleByElement(model.indices.length);
+                        break;
                 }
             })})
         // requestAnimationFrame(this.render.bind(this));    

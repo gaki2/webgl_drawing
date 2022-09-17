@@ -10,7 +10,6 @@ export default class Shader {
     
 
     init() {
-        
         const vertexShader = GLC.createVertexShader();
         if (vertexShader) {
             GLC.addShaderSource(vertexShader, VertexShaderSourceText);
